@@ -1,0 +1,37 @@
+services:
+  socks5-pool:
+    image: ghcr.io/${GITHUB_REPOSITORY:-ZJ145013/socks5-proxy}:latest
+    container_name: socks5-pool
+    restart: unless-stopped
+    ports:
+      - "1080:1080"  # SOCKS5 proxy port
+      - "8080:8080"  # Web dashboard port
+    environment:
+      # Optional: override default settings via environment variables
+      # These are passed as command-line flags
+      - LISTEN_ADDR=0.0.0.0:1080
+      - STATUS_ADDR=0.0.0.0:8080
+    command: >
+      ./socks5-pool
+      -listen 0.0.0.0:1080
+      -status 0.0.0.0:8080
+      -scrape-interval 20m
+      -check-timeout 10s
+      -max-concurrent 20
+    networks:
+      - socks5-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  socks5-network:
+    driver: bridge

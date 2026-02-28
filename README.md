@@ -57,16 +57,42 @@ GET  /api/switch           # Switch to next proxy
 GET  /api/switch?index=N   # Switch to specific proxy
 ```
 
-## Docker
+## Deployment
+
+### Docker Compose (Recommended)
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/socks5-proxy.git
+cd socks5-proxy
+
+# Copy environment file
+cp .env.example .env
+
+# Start with Docker Compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+```
+
+### Docker
+
+```bash
+# Using pre-built image from GitHub Container Registry
+docker pull ghcr.io/yourusername/socks5-proxy:latest
+docker run -d -p 1080:1080 -p 8080:8080 ghcr.io/yourusername/socks5-proxy:latest
+
+# Or build locally
 docker build -t socks5-pool .
 docker run -p 1080:1080 -p 8080:8080 socks5-pool
 ```
 
-## Deploy to Railway
+### Railway
 
 The project includes `railway.toml` for one-click Railway deployment.
+
+📖 **For detailed deployment instructions, see [DEPLOY.md](DEPLOY.md)**
 
 ## Project Structure
 

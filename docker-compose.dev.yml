@@ -1,0 +1,29 @@
+# 开发环境配置 - 使用本地构建
+services:
+  socks5-pool:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: socks5-pool-dev
+    restart: unless-stopped
+    ports:
+      - "1080:1080"
+      - "8080:8080"
+    command: >
+      ./socks5-pool
+      -listen 0.0.0.0:1080
+      -status 0.0.0.0:8080
+      -scrape-interval 15m
+      -check-timeout 10s
+      -max-concurrent 30
+    networks:
+      - socks5-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+networks:
+  socks5-network:
+    driver: bridge

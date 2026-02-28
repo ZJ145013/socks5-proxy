@@ -1,2 +1,30 @@
+# Binaries
 *.exe
 socks5-pool
+*.test
+*.out
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# OMC (oh-my-claudecode)
+.omc/
