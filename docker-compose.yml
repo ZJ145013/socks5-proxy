@@ -1,11 +1,11 @@
 services:
   socks5-pool:
-    image: ghcr.io/${GITHUB_REPOSITORY:-ZJ145013/socks5-proxy}:latest
+    image: ghcr.io/zj145013/socks5-proxy:latest
     container_name: socks5-pool
-    restart: unless-stopped
+    restart: always
     ports:
       - "1080:1080"  # SOCKS5 proxy port
-      - "8080:8080"  # Web dashboard port
+      - "1081:8080"  # Web dashboard port
     environment:
       # Optional: override default settings via environment variables
       # These are passed as command-line flags
